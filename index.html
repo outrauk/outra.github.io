@@ -3,41 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links to CORE Pages</title>
-    <style>
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 10px;
-            text-align: center;
-            transition: box-shadow 0.3s ease;
-        }
-        .card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-    </style>
+    <title>CORE Data Products</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>CORE Pages</h1>
-    <div class="container">
-        <div class="card">
-            <h2>CORE.ON_MARKET_EVENTS</h2>
-            <a href="https://sturdy-adventure-9je488g.pages.github.io/#!/overview">Go to Page</a>
-        </div>
-        <div class="card">
-            <h2>CORE.DEMOGRAPHICS</h2>
-            <a href="https://expert-adventure-9qezvnm.pages.github.io/#!/model/model.dbt_household.demographics">Go to Page</a>
-        </div>
-        <div class="card">
-            <h2>CORE.SEGMENTS</h2>
-            <a href="https://expert-adventure-9qezvnm.pages.github.io/#!/model/model.dbt_household.segments">Go to Page</a>
-        </div>
-    </div>
+    <header>
+        <h1>CORE Data Products</h1>
+    </header>
+    <main>
+        <section id="property">
+            <h2>Property</h2>
+            <ul>
+                <li>CORE.PROPERTY.PROPERTY_COMBINED</li>
+            </ul>
+        </section>
+        <section id="geographic">
+            <h2>Geographic</h2>
+            <ul>
+                <li>CORE.GEOGRAPHIC.UPRN_ADDRESS_DETAILS</li>
+                <li>CORE.GEOGRAPHIC.POSTCODE</li>
+            </ul>
+        </section>
+        <section id="listings">
+            <h2>Listings</h2>
+            <ul>
+                <li>CORE.LISTINGS.ON_MARKET_EVENTS_CONSOLIDATED</li>
+                <li>CORE.LISTINGS.ON_MARKET_LISTINGS</li>
+                <li>CORE.LISTINGS.AGENTS_PERFORMANCE</li>
+            </ul>
+        </section>
+        <section id="household">
+            <h2>Household</h2>
+            <ul>
+                <li>CORE.HOUSEHOLD.SEGMENTS</li>
+                <li>CORE.HOUSEHOLD.DEMOGRAPHICS</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>Updated on: 2026-02-18</p>
+    </footer>
 </body>
 </html>
