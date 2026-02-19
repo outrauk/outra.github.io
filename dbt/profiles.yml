@@ -1,0 +1,57 @@
+config:
+  print: false
+
+dbt_core:
+  target: local # default
+  outputs:
+    local:
+      type: snowflake
+      account: outra.eu-west-1
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
+      warehouse: ETL
+      database: SANDBOX
+      schema: ON_MARKET_EVENTS
+      threads: 10
+      client_session_keep_alive: False
+      authenticator: "{{ env_var('AUTHENTICATION_METHOD', 'snowflake') }}"
+
+    dev:
+      type: snowflake
+      account: outra.eu-west-1
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
+      warehouse: ETL
+      database: SILVER_DEV
+      schema: ON_MARKET_EVENTS
+      threads: 10
+      client_session_keep_alive: False
+      authenticator: "{{ env_var('AUTHENTICATION_METHOD', 'snowflake') }}"
+
+    stg:
+      type: snowflake
+      account: outra.eu-west-1
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
+      warehouse: ETL
+      database: SILVER_STG
+      schema: ON_MARKET_EVENTS
+      threads: 10
+      client_session_keep_alive: False
+      authenticator: "{{ env_var('AUTHENTICATION_METHOD', 'snowflake') }}"
+
+    prod:
+      type: snowflake
+      account: outra.eu-west-1
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
+      warehouse: ETL
+      database: SILVER
+      schema: ON_MARKET_EVENTS
+      threads: 10
+      client_session_keep_alive: False
+      authenticator: "{{ env_var('AUTHENTICATION_METHOD', 'snowflake') }}"

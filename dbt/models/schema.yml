@@ -1,0 +1,40 @@
+#yml files are used to describe models - you can add descriptions and tests to models as well as sources
+
+version: 2
+
+sources:
+
+    - name: CORE.PROPERTY
+      description: ''
+      database: CORE
+      schema: PROPERTY
+      tables:
+        - name: PROPERTY_COMBINED
+
+    - name: CORE.GEOGRAPHIC
+      description: ''
+      database: CORE
+      schema: GEOGRAPHIC
+      tables:
+        - name: UPRN_ADDRESS_DETAILS
+        - name: POSTCODE
+
+    - name: CORE.HOUSEHOLD
+      description: ''
+      database: CORE
+      schema: HOUSEHOLD
+      tables:
+        - name: DEMOGRAPHICS
+        - name: SEGMENTS
+
+    - name: CORE.LISTINGS
+      description: ''
+      database: GOLD
+      schema: ON_MARKET_EVENTS
+      tables:
+        - name: ON_MARKET_EVENTS_CONSOLIDATED
+        - name: ON_MARKET_EVENTS
+        - name: ON_MARKET_LISTINGS
+        - name: ON_MARKET_STATUS_CURRENT
+        - name: ON_MARKET_STATUS_HISTORY
+        - name: AGENTS_VERIFIED
