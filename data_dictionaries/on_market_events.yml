@@ -1,0 +1,35 @@
+models:
+
+  - name: on_market_events
+    description: >
+      Tracks changes and events related to property listings over time,
+      such as price changes or status updates.
+    columns:
+      - name: SOURCE
+        description: Provider of the data.
+      - name: ID
+        description: Event identifier, incremental by EVENT_DATE and unique per LISTING_ID.
+      - name: LISTING_ID
+        description: Unique identifier for each property listing.
+      - name: UPRN
+        description: Unique Property Identifier.
+      - name: TRANSACTION_TYPE
+        description: Indicates whether the listing is for sale or rent.
+      - name: EVENT_TYPE
+        description: Type of event (e.g., price change, status update).
+      - name: EVENT_INFERRED
+        description: Weather the event was inferred or observed.
+      - name: PRICE
+        description: Price of the listing on the event date.
+      - name: AGENT_BRANCH
+        description: Agent responsible for the related listing.
+      - name: AGENT_BRAND
+        description: The brand associated with the agent. Populated only if the agent appears on the verified list.
+      - name: EVENT_DATE
+        description: Date when the event occurred.
+      - name: INSERT_DATE
+        description: Date when the event was recorded in the database.
+      - name: LOAD_DATE
+        description: Date when the listing which originates the event was loaded.
+      - name: RUN_DATE
+        description: Table compilation date.

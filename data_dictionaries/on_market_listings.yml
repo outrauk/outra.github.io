@@ -1,0 +1,28 @@
+models:
+  - name: on_market_listings
+    description: >
+      Contains the latest snapshot of property listings currently on the market,
+      including metadata such as price, status, and source.
+    columns:
+      - name: SOURCE
+        description: Provider of the data.
+      - name: LISTING_ID
+        description: Unique identifier for each property listing.
+      - name: TRANSACTION_TYPE
+        description: Indicates whether the listing is for sale or rent.
+      - name: LAST_UPDATE_DATE
+        description: Date when the listing was last updated.
+      - name: FIRST_VISIBLE_DATE
+        description: Date when the listing was first seen.
+      - name: AGENT_BRANCH
+        description: Name or identifier of the agent's branch managing the listing.
+      - name: LISTING_STATUS
+        description: Current status of the listing (available or under offer).
+      - name: PRICE
+        description: Listed price of the property.
+      - name: MESSAGE_TIMESTAMP
+        description: Date when the listing was loaded.
+      - name: CHANGE_TYPE
+        description: Type of change occurring in the listing (ex. Price Change)
+      - name: RUN_DATE
+        description: Table compilation date.

@@ -1,0 +1,59 @@
+models:
+  - name: on_market_status_hist
+    description: >
+      Daily append-only snapshot of the market status for each UPRN. This table uses
+      on_market_events_consolidated to determine the most recent SALE and RENT market events
+      and uses events_by_uprn to correctly identify DEED events to add in extra context.
+      One row per UPRN per day.
+
+    columns:
+      - name: UPRN
+        description: Unique Property Reference Number.
+        tests:
+          - not_null
+          - unique
+
+      - name: OUTRA_ID_SALE
+        description: OUTRA identifier from latest sale market event.
+      
+      - name: OUTRA_ID_RENT
+        description: OUTRA identifier from latest rent market event.
+
+      - name: LISTING_ID_SALE
+        description: Listing identifier from latest sale market event.
+
+      - name: LISTING_ID_RENT
+        description: Listing identifier from latest rent market event.
+        
+      - name: IS_ON_MARKET_SALE
+        description: TRUE if the UPRN is currently on the market for sale.
+        tests:
+          - not_null
+
+      - name: IS_ON_MARKET_RENT
+        description: TRUE if the UPRN is currently on the market for rent.
+        tests:
+          - not_null
+
+      - name: LAST_EVENT_TYPE_SALE
+        description: Latest event type associated with SALE activity.
+
+      - name: LAST_EVENT_TYPE_RENT
+        description: Latest event type associated with RENT activity.
+
+      - name: LAST_EVENT_DATE_SALE
+        description: Date of the most recent SALE event for the UPRN.
+
+      - name: LAST_EVENT_DATE_RENT
+        description: Date of the most recent RENT event for the UPRN.
+
+      - name: LAST_LISTING_DATE_SALE
+        description: Latest valid SALE listing date.
+
+      - name: LAST_LISTING_DATE_RENT
+        description: Latest valid RENT listing date.
+
+      - name: INSERT_DATE
+        description: Daily snapshot date. Used to append one record per property per day.
+        tests:
+          - not_null

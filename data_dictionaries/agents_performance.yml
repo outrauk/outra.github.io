@@ -1,0 +1,74 @@
+models: 
+  - name: agents_performance 
+    description: Aggregated performance metrics for each agent branch across multiple time periods (monthly, rolling 3 month, rolling 6 month). Includes active listings, event counts, funnel conversion rates, time-to-event metrics, and postcode/outcode coverage. 
+    columns: 
+      - name: agent_verified_id 
+        description: Unique identifier of the agent branch, sourced from `agents_verified`. 
+      - name: agent_branch_cleaned 
+        description: Cleaned and normalized agent branch name using the `clean_agent_branch_name` macro. 
+        tests: 
+          - not_null 
+      - name: agent_brand 
+        description: Verified agent brand resolved from `agents_verified`. 
+      - name: agent_type 
+        description: Transaction type for the agent. One of 'SALE', 'RENT' or 'RENT + SALE'. 
+      - name: period_type 
+        description: One of '1M', 'ROLLING_3M', 'ROLLING_6M'. 
+        tests: 
+          - not_null 
+      - name: period_from 
+        description: Start date of the reporting period. 
+        tests: 
+          - not_null 
+      - name: period_to 
+        description: End date of the reporting period. 
+        tests: 
+          - not_null 
+      - name: transaction_type 
+        description: The transaction type (SALE or RENT) for the period. 
+        tests: 
+          - not_null 
+      - name: n_active_listings_at_start 
+        description: Number of active listings as of the start of the period. 
+      - name: n_sstc_at_start 
+        description: Number of listings under offer (SSTC) at the start of the period. 
+      - name: n_new_instructions 
+        description: Count of new instructions within the period. 
+      - name: n_withdrawals 
+        description: Count of withdrawn listings within the period. 
+      - name: n_sstc 
+        description: Number of listings that went under offer within the period. 
+      - name: n_exchanges 
+        description: Number of listings exchanged within the period. 
+      - name: n_fall_throughs 
+        description: Number of fall through events within the period. 
+      - name: new_to_sstc_rate 
+        description: Proportion of active listings at the start that reached SSTC during the period. 
+      - name: new_to_exchange_rate 
+        description: Proportion of active listings at the start that exchanged during the period. -
+      - name: withdraw_rate 
+        description: Withdrawal rate relative to active listings at the start. 
+      - name: sstc_to_exchange_rate 
+        description: Proportion of listings already SSTC at the start that reached exchange. 
+      - name: fall_through_rate 
+        description: Proportion of SSTC-at-start listings that fell through during the period. 
+      - name: avg_n_days_from_new_to_sstc 
+        description: Average days from new instruction to SSTC. 
+      - name: median_n_days_from_new_to_sstc 
+        description: Median days from new instruction to SSTC. 
+      - name: avg_n_days_from_sstc_to_exchange 
+        description: Average days from SSTC to exchange. 
+      - name: median_n_days_from_sstc_to_exchange 
+        description: Median days from SSTC to exchange. 
+      - name: avg_n_days_from_new_to_exchange 
+        description: Average days from new instruction to exchange. 
+      - name: median_n_days_from_new_to_exchange 
+        description: Median days from new instruction to exchange. 
+      - name: top10_postcodes 
+        description: Array of the top 10 postcodes for the agent by the number of new instructions in the specified period. 
+      - name: postcodes_details 
+        description: Detailed listing of postcodes with n_new_instructions (number of new instructions), market share (number of new instructions of the agents divided by that of all new instructions in the period), and rank (rank of each postcode by the number of new instructions for an agent). 
+      - name: top10_outcodes 
+        description: Array of the top 10 outcodes for the agent by the number of new instructions in the specified period. 
+      - name: outcodes_details 
+        description: Detailed listing of outcodes with n_new_instructions (number of new instructions), market share (number of new instructions of the agents divided by that of all new instructions in the period), and rank (rank of each postcode by the number of new instructions for an agent). 

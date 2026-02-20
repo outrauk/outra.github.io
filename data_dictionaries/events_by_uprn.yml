@@ -1,0 +1,197 @@
+models:
+
+  - name: events_by_uprn
+    description: >
+      Tracks changes and events related to property listings over time,
+      such as price changes or status updates.
+
+    tests:
+      # Consolidated tests
+      - test_consolidated_new_instruction_uprn:
+          key_column: UPRN
+          max_failure_rate: 0.1
+      - test_consolidated_new_instruction_next:
+          key_column: UPRN
+          max_failure_rate: 0.3
+      - test_consolidated_price_change_next:
+          key_column: UPRN
+          max_failure_rate: 0.3
+      - test_consolidated_withdrawn_next_uprn:
+          key_column: UPRN
+          max_failure_rate: 0.3
+      - test_consolidated_under_offer_next:
+          key_column: UPRN
+          max_failure_rate: 0.3
+      - test_consolidated_relisted_next:
+          key_column: UPRN
+          max_failure_rate: 0.3
+      - test_consolidated_exchange_next_uprn:
+          key_column: UPRN
+          max_failure_rate: 0.1
+
+      
+      # Cumulative count tests
+      - test_count_events_uprn:
+          event: 'NEW_INSTRUCTION'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'PRICE_CHANGE'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'EXCHANGE'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'WITHDRAWN'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'UNDER_OFFER'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'RELISTED'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'DEED'
+          transaction_type: 'SALE'
+      - test_count_events_uprn:
+          event: 'FALL_THROUGH'
+          transaction_type: 'SALE'
+
+      - test_count_events_uprn:
+          event: 'NEW_INSTRUCTION'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'PRICE_CHANGE'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'EXCHANGE'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'WITHDRAWN'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'UNDER_OFFER'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'RELISTED'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'DEED'
+          transaction_type: 'RENT'
+      - test_count_events_uprn:
+          event: 'FALL_THROUGH'
+          transaction_type: 'RENT'
+
+
+      # Event distribution tests
+      - test_events_count_distribution:
+          event: 'NEW_INSTRUCTION'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'PRICE_CHANGE'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'EXCHANGE'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'WITHDRAWN'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'UNDER_OFFER'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'RELISTED'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'DEED'
+          transaction_type: 'SALE'
+      - test_events_count_distribution:
+          event: 'FALL_THROUGH'
+          transaction_type: 'SALE'
+
+      - test_events_count_distribution:
+          event: 'NEW_INSTRUCTION'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'PRICE_CHANGE'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'EXCHANGE'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'WITHDRAWN'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'UNDER_OFFER'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'RELISTED'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'DEED'
+          transaction_type: 'RENT'
+      - test_events_count_distribution:
+          event: 'FALL_THROUGH'
+          transaction_type: 'RENT'
+
+    # COLUMN TESTS
+    columns:
+      - name: UPRN
+        description: Unique Property Reference Number identifying the property.
+        tests: [not_null]
+
+      - name: TRANSACTION_TYPE
+        description: Type of transaction associated with the event.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SALE', 'RENT']
+
+      - name: EVENT_DATE
+        description: Date when the event occurred.
+        tests:
+          - not_null
+          - test_event_date_not_in_future
+
+      - name: EVENT_TYPE
+        description: Type of event that occurred.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [
+                "NEW_INSTRUCTION", "PRICE_CHANGE", "EXCHANGE",
+                "WITHDRAWN", "UNDER_OFFER", "RELISTED",
+                "DEED", "FALL_THROUGH"
+              ]
+
+      - name: EVENT_INFERRED
+        description: Whether the event was inferred or observed by Outra Logic.
+        tests:
+          - accepted_values:
+              values: ['TRUE', 'FALSE']
+
+      - name: PRICE
+        description: Price of the listing on the event date.
+        tests:
+          - test_price_not_negative
+          - test_price_null_valid
+
+      - name: INSERT_DATE
+        description: Date when the event was recorded in the database.
+        tests:
+          - not_null:
+              severity: warn
+          - test_event_date_not_in_future
+
+      - name: LOAD_DATE
+        description: Date when the listing related to the event was loaded.
+        tests:
+          - not_null:
+              severity: warn
+          - test_event_date_not_in_future
+
+      - name: LAST_MODIFIED_DATE
+        description: Date when the event was last modified.
+        tests:
+          - not_null:
+              severity: warn
+          - test_event_date_not_in_future

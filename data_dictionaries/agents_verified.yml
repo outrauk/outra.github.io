@@ -1,0 +1,48 @@
+ models:
+  - name: agents_verified
+    description: Verified listing agents with hashed identifiers
+    columns:
+      - name: agent_verified_id
+        description: Unique identifier (MD5 of agent_branch_cleaned)
+        tests:
+          - not_null
+          - unique
+      
+      - name: agent_branch_cleaned
+        description: Cleaned version of `agent_branch` using the `clean_agent_branch_name` macro for normalization
+
+      - name: agent_brand_inferred
+        description: Inferred brand name associated with the agent using the `infer_agent_brand_name` macro on `agent_branch`
+
+      - name: agent_brand
+        description: Mapped brand name associated with the agent
+
+      - name: agent_group
+        description: Group or category the agent belongs to
+
+      - name: agent_phone
+        description: The latest available phone number associated with the agent
+
+      - name: agent_address
+        description: The latest available address associated with the agent
+
+      - name: agent_branch_date_first_seen
+        description: Date on which agent_branch was first observed in on_market_events
+
+      - name: agent_brand_date_first_seen
+        description: Date on which agent_brand was first observed in on_market_events
+      
+      - name: agent_branch_date_last_seen
+        description: Date on which agent_branch was last observed in on_market_events
+
+      - name: agent_brand_date_last_seen
+        description: Date on which agent_brand was last observed in on_market_events
+
+      - name: is_manually_verified
+        description: Boolean flag indicating whether agent_brand and agent_group come from manually verified list. False if they come from matching inferred agent name with verified records.
+      
+      - name: created_at
+        description: Timestamp when the record was created
+
+      - name: updated_at
+        description: Timestamp when the record was updated

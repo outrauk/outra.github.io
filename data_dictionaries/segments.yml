@@ -1,0 +1,262 @@
+version: 2
+
+models:
+  - name: segments
+    description: "Segments assigned to each UPRN"
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: uprn
+        description: "Unique Property Reference Number"
+        data_type: NUMERIC
+        data_tests:
+          - not_null
+          - unique
+      - name: postcode
+        description: "Postcode of the property"
+        data_type: VARCHAR
+        data_tests:
+          - not_null
+      - name: seg_young_professionals
+        description: "Indicator for Young Professionals segment. Early-career, employed, digitally native adults living in flats."
+        data_type: BOOLEAN
+      - name: seg_middle_aged_professionals
+        description: "Indicator for Middle Aged Professionals segment. Mid-career, employed adults age 40-59."
+        data_type: BOOLEAN
+      - name: seg_city_renters
+        description: "Indicator for City Renters segment. Renters in urban flats with small households."
+        data_type: BOOLEAN
+      - name: seg_young_couples_no_kids
+        description: "Indicator for Young Couples No Kids segment. Young adult couples without children, age 30-44."
+        data_type: BOOLEAN
+      - name: seg_first_time_homeowners
+        description: "Indicator for First Time Homeowners segment. Young adults who purchased first home (past 3 years), age 30-39."
+        data_type: BOOLEAN
+      - name: seg_new_parents
+        description: "Indicator for New Parents segment. Families with children under 4 years old."
+        data_type: BOOLEAN
+      - name: seg_family_builders
+        description: "Indicator for Family Builders segment. Growing families in larger homes."
+        data_type: BOOLEAN
+      - name: seg_suburban_family_homes
+        description: "Indicator for Suburban Family Homes segment. Suburban households with cars and gardens."
+        data_type: BOOLEAN
+      - name: seg_affluent_households
+        description: "Indicator for Affluent Households segment. High income, financial comfortable households with savings."
+        data_type: BOOLEAN
+      - name: seg_high_value_homeowners
+        description: "Indicator for High Value Homeowners segment. Asset-rich property owners, above 750k property value."
+        data_type: BOOLEAN
+      - name: seg_high_spending_credit_users
+        description: "Indicator for High Spending Credit Users segment. Very high credit card spenders, with high incomes >50k."
+        data_type: BOOLEAN
+      - name: seg_moderate_credit_users
+        description: "Indicator for Moderate Credit Users segment. Moderate credit card spenders, active but not excessive."
+        data_type: BOOLEAN
+      - name: seg_debt_active_borrowers
+        description: "Indicator for Debt Active Borrowers segment. Households with unsecured loans or high debt levels."
+        data_type: BOOLEAN
+      - name: seg_cost_conscious_households
+        description: "Indicator for Cost Conscious Households segment. Price-sensitive households under financial pressure."
+        data_type: BOOLEAN
+      - name: seg_long_term_homeowners
+        description: "Indicator for Long Term Homeowners segment. Stable owners who purchased property over 10 years ago."
+        data_type: BOOLEAN
+      - name: seg_high_value_renovation_mindset
+        description: "Indicator for High Value Renovation Mindset segment. Owners of older, inefficient high-value properties."
+        data_type: BOOLEAN
+      - name: seg_standard_renovation_opportunity
+        description: "Indicator for Standard Renovation Opportunity segment. Owners of older, inefficient mid-value properties."
+        data_type: BOOLEAN
+      - name: seg_new_build
+        description: "Indicator for New Build segment. Residents of modern, energy-efficient homes."
+        data_type: BOOLEAN
+      - name: seg_eco_aware_households
+        description: "Indicator for Eco Aware Households segment. Sustainability-focused households, based on car, energy_rating and diet."
+        data_type: BOOLEAN
+      - name: seg_car_centric_families
+        description: "Indicator for Car Centric Families segment. Vehicle-dependent households."
+        data_type: BOOLEAN
+      - name: seg_active_fitness_enthusiasts
+        description: "Indicator for Active Fitness Enthusiasts segment. Regular exercisers with sports interests."
+        data_type: BOOLEAN
+      - name: seg_health_conscious_food_focus
+        description: "Indicator for Health Conscious Food Focus segment. Healthy eating focused, including organic/vegan."
+        data_type: BOOLEAN
+      - name: seg_wellness_lifestyle
+        description: "Indicator for Wellness Lifestyle segment. General wellness seekers (exercise OR healthy food, but not both intensely)."
+        data_type: BOOLEAN
+      - name: seg_responsible_pet_owners
+        description: "Indicator for Responsible Pet Owners segment. Pet owners with insurance, indicating responsible ownership."
+        data_type: BOOLEAN
+      - name: seg_casual_pet_owners
+        description: "Indicator for Casual Pet Owners segment. Pet owners without insurance, indicating casual ownership."
+        data_type: BOOLEAN
+      - name: seg_pre_retirees
+        description: "Indicator for Pre Retirees segment. Older homeowners approaching retirement age, age 55-64."
+        data_type: BOOLEAN
+      - name: seg_retired_homeowners
+        description: "Indicator for Retired Homeowners segment. Retired property owners, no age defined."
+        data_type: BOOLEAN
+      - name: seg_digital_first_households
+        description: "Indicator for Digital First Households segment. Tech-savvy households, comfortable with online transactions."
+        data_type: BOOLEAN
+      - name: seg_frequent_travelers
+        description: "Indicator for Frequent Travelers segment. Travel insurance holders, indicating regular travel."
+        data_type: BOOLEAN
+      - name: seg_occasional_travelers
+        description: "Indicator for Occasional Travelers segment. Airbnb users but no travel insurance (casual travelers)."
+        data_type: BOOLEAN
+      - name: seg_property_investors
+        description: "Indicator for Property Investors segment. Owners of buy-to-let or multiple properties."
+        data_type: BOOLEAN
+      - name: seg_learner_new_drivers
+        description: "Indicator for Learner New Drivers segment. Young adults (18-29) who are likely learning to drive or new drivers."
+        data_type: BOOLEAN
+      - name: seg_car_upgrade_prospects
+        description: "Indicator for Car Upgrade Prospects segment. Households with older cars (>3 years) and good income (>50k), likely to upgrade."
+        data_type: BOOLEAN
+      - name: seg_high_mileage_drivers
+        description: "Indicator for High Mileage Drivers segment. Drivers with high annual mileage (>9k/year), likely need frequent servicing/insurance."
+        data_type: BOOLEAN
+      - name: seg_multi_car_households
+        description: "Indicator for Multi Car Households segment. Households with 2+ cars, higher insurance/service needs."
+        data_type: BOOLEAN
+      - name: seg_electric_vehicle_adopters
+        description: "Indicator for Electric Vehicle Adopters segment. Households with electric/hybrid vehicles and high income (>50k)."
+        data_type: BOOLEAN
+      - name: seg_car_commuters
+        description: "Indicator for Car Commuters segment. Households where at least one adult commutes by car."
+        data_type: BOOLEAN
+      - name: seg_insurance_conscious_households
+        description: "Indicator for Insurance Conscious Households segment. Households with multiple insurance policies, indicating insurance awareness."
+        data_type: BOOLEAN
+      - name: seg_high_risk_drivers
+        description: "Indicator for High Risk Drivers segment. Young drivers (18-34y) with high mileage (>9k) - higher insurance risk."
+        data_type: BOOLEAN
+      - name: seg_low_risk_drivers
+        description: "Indicator for Low Risk Drivers segment. Older (45+y), low-mileage drivers (<9k) - lower insurance risk"
+        data_type: BOOLEAN
+      - name: seg_property_insurance_prospects
+        description: "Indicator for Property Insurance Prospects segment. Recent homeowners (<3y) or high-value (>500k) properties needing insurance."
+        data_type: BOOLEAN
+      - name: seg_breakdown_cover_prospects
+        description: "Indicator for Breakdown Cover Prospects segment. Car owners without breakdown cover - insurance acquisition opportunity."
+        data_type: BOOLEAN
+      - name: seg_life_stage_student
+        description: "Indicator for Life Stage Student segment. Non-mature students (18-24y)."
+        data_type: BOOLEAN
+      - name: seg_rural_area
+        description: "Indicator of Rural Area."
+        data_type: BOOLEAN
+      - name: seg_suburban_area
+        description: "Indicator of suburban Area."
+        data_type: BOOLEAN
+      - name: seg_urban_area
+        description: "Indicator of urban Area."
+        data_type: BOOLEAN
+      - name: seg_renters
+        description: "Indicator for Renters segment. Households that rent their property."
+        data_type: BOOLEAN
+      - name: seg_owners
+        description: "Indicator for Owners segment. Households that own their property."
+        data_type: BOOLEAN
+      - name: seg_property_small_home
+        description: "Indicator for Property Small Home segment. Properties with 1-3 bedrooms."
+        data_type: BOOLEAN
+      - name: seg_property_large_home
+        description: "Indicator for Property Large Home segment. Properties with 4+ bedrooms."
+        data_type: BOOLEAN
+      - name: seg_property_garden
+        description: "Indicator for Property Garden segment. Properties with gardens."
+        data_type: BOOLEAN
+      - name: seg_ev_readiness_ready
+        description: "Indicator for EV Readiness Ready segment. Households with garage or parking."
+        data_type: BOOLEAN
+      - name: seg_spare_bed
+        description: "Indicator for Spare Bed segment. Properties with more bedrooms than household members, indicating spare capacity."
+        data_type: BOOLEAN
+      - name: seg_retire_soon
+        description: "Indicator for Retire Soon segment. Homeowners aged 53-69 with high-value properties (>£250k), financially ready for retirement planning."
+        data_type: BOOLEAN
+      - name: seg_electric_heating
+        description: "Indicator for Electric Heating segment. Properties primarily heated by electric systems."
+        data_type: BOOLEAN
+      - name: seg_gas_heating
+        description: "Indicator for Gas Heating segment. Properties primarily heated by gas systems."
+        data_type: BOOLEAN
+      - name: seg_garage
+        description: "Indicator for Garage segment. Properties that include a garage."
+        data_type: BOOLEAN
+      - name: seg_parking
+        description: "Indicator for Parking segment. Properties that include parking facilities."
+        data_type: BOOLEAN
+      - name: seg_sale_anni_q1
+        description: "Indicator for Sale Anniversary Q1 segment. Properties with sale anniversary in Q1."
+        data_type: BOOLEAN
+      - name: seg_sale_anni_q2
+        description: "Indicator for Sale Anniversary Q2 segment. Properties with sale anniversary in Q2."
+        data_type: BOOLEAN
+      - name: seg_sale_anni_q3
+        description: "Indicator for Sale Anniversary Q3 segment. Properties with sale anniversary in Q3."
+        data_type: BOOLEAN
+      - name: seg_sale_anni_q4
+        description: "Indicator for Sale Anniversary Q4 segment. Properties with sale anniversary in Q4."
+        data_type: BOOLEAN
+      - name: seg_just_moved
+        description: "Indicator for Just Moved segment. Properties with an EXCHANGE event in the last 3 months."
+        data_type: BOOLEAN
+      - name: seg_recently_moved
+        description: "Indicator for Recently Moved segment. Properties with an EXCHANGE event between 3 and 6 months."
+        data_type: BOOLEAN
+      - name: seg_predicted_move
+        description: "Indicator for Predicted Move segment. Properties predicted to move in the next 6 months."
+        data_type: BOOLEAN
+      - name: seg_move_intent
+        description: "Indicator for Move Intent segment. Properties with NEW_INSTRUCTION, RELISTED, FALL_THROUGH in the last 18 months"
+        data_type: BOOLEAN
+      - name: seg_moving
+        description: "Indicator for Moving segment. Properties with a UNDER_OFFER event in the last 18 months."
+        data_type: BOOLEAN
+      - name: seg_post_move
+        description: "Indicator for Post Move segment. Properties with a EXCHANGE event between 6 and 12 months."
+        data_type: BOOLEAN
+      - name: seg_premover
+        description: "Indicator for Premover segment. Properties do not match with any of the above mover segments, score > 0.7."
+        data_type: BOOLEAN
+      - name: seg_rental_movers
+        description: "Indicator for transaction_type rental"
+        data_type: BOOLEAN
+      - name: seg_hnw_super_rich
+        description: "Flag indicating properties with very high value
+          (property value greater than £2.8m)."
+        data_type: BOOLEAN
+      - name: seg_hnw_retiring_in_comfort
+        description: "Flag for households that are retired or in older age bands,
+          indicating financially comfortable retirement, over 65 years old."
+        data_type: BOOLEAN
+      - name: seg_hnw_professional_near_retirement
+        description:
+          "Flag for wealthy professionals likely to retire in the
+          next five years, over 60 years old."
+        data_type: BOOLEAN
+      - name: seg_hnw_luxury_apartments
+        description:
+          "Flag for high-value flats or maisonettes with property value greater than £1.2m."
+        data_type: BOOLEAN
+      - name: seg_hnw_wealthy_families
+        description:
+          "Flag for affluent households with children at home, over 25 years old."
+        data_type: BOOLEAN
+      - name: seg_hnw_young_professionals
+        description:
+          "Flag for younger working-age households without children, aged 25-39."
+        data_type: BOOLEAN
+      - name: seg_hnw_middle_aged_professionals
+        description:
+          "Flag for households not captured by other wealth segments."
+        data_type: BOOLEAN
+      - name: seg_sale_movers
+        description: "Indicator for transaction_type sale"
+        data_type: BOOLEAN

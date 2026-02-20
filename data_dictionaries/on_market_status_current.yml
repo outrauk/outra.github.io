@@ -1,0 +1,113 @@
+models:
+  - name: on_market_status_current
+    description: >
+      Current on-market status for each UPRN, derived from the latest snapshot in
+      current_on_market_status_hist and enriched with market activity windows,
+      deed history, and new-build classification using event data.
+
+    columns:
+      - name: UPRN
+        description: Unique Property Reference Number.
+        tests:
+          - not_null
+          - unique
+
+      - name: OUTRA_ID_SALE
+        description: OUTRA identifier from latest sale market event.
+      
+      - name: OUTRA_ID_RENT
+        description: OUTRA identifier from latest rent market event.
+
+      - name: LISTING_ID_SALE
+        description: Listing identifier from latest sale market event.
+
+      - name: LISTING_ID_RENT
+        description: Listing identifier from latest rent market event.
+        
+      - name: IS_ON_MARKET_SALE
+        description: TRUE if the property is currently active on the SALE market.
+        tests:
+          - not_null
+
+      - name: IS_ON_MARKET_RENT
+        description: TRUE if the property is currently active on the RENT market.
+        tests:
+          - not_null
+
+      - name: LAST_EVENT_TYPE_SALE
+        description: Most recent SALE event type used to determine sale status.
+
+      - name: LAST_EVENT_TYPE_RENT
+        description: Most recent RENT event type used to determine rent status.
+
+      - name: LAST_EVENT_DATE_SALE
+        description: Date of the most recent SALE event.
+
+      - name: LAST_EVENT_DATE_RENT
+        description: Date of the most recent RENT event.
+
+      - name: LAST_LISTING_DATE_SALE
+        description: Latest active SALE listing event date.
+
+      - name: LAST_LISTING_DATE_RENT
+        description: Latest active RENT listing event date.
+
+      - name: HAS_MARKET_EVENT_3M_SALE
+        description: TRUE if a SALE market event occurred within the last 3 months.
+        tests:
+          - not_null
+
+      - name: HAS_MARKET_EVENT_6M_SALE
+        description: TRUE if a SALE market event occurred within the last 6 months.
+        tests:
+          - not_null
+
+      - name: HAS_MARKET_EVENT_12M_SALE
+        description: TRUE if a SALE market event occurred within the last 12 months.
+        tests:
+          - not_null
+
+      - name: HAS_MARKET_EVENT_3M_RENT
+        description: TRUE if a RENT market event occurred within the last 3 months.
+        tests:
+          - not_null
+
+      - name: HAS_MARKET_EVENT_6M_RENT
+        description: TRUE if a RENT market event occurred within the last 6 months.
+        tests:
+          - not_null
+
+      - name: HAS_MARKET_EVENT_12M_RENT
+        description: TRUE if a RENT market event occurred within the last 12 months.
+        tests:
+          - not_null
+
+      - name: HAS_DEED_6M
+        description: TRUE if a DEED occurred within the last 6 months.
+        tests:
+          - not_null
+
+      - name: HAS_DEED_12M
+        description: TRUE if a DEED occurred within the last 12 months.
+        tests:
+          - not_null
+
+      - name: HAS_DEED_18M
+        description: TRUE if a DEED occurred within the last 18 months.
+        tests:
+          - not_null
+
+      - name: HAS_DEED_24M
+        description: TRUE if a DEED occurred within the last 24 months.
+        tests:
+          - not_null
+
+      - name: IS_NEW_BUILD_NO_SALE
+        description: TRUE if the property is a new build with no recorded sale history.
+        tests:
+          - not_null
+
+      - name: INSERT_DATE
+        description: Date when the current snapshot was generated.
+        tests:
+          - not_null

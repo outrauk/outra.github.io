@@ -1,0 +1,93 @@
+models:
+
+  - name: on_market_events_consolidated
+    description: >
+      Tracks changes and events related to property listings over time,
+      such as price changes or status updates.
+    tests:
+      - test_consolidated_new_instruction:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.1  # 10% threshold
+      - test_consolidated_new_instruction_next:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.1
+      - test_consolidated_price_change_next:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.1
+      - test_consolidated_withdrawn_next:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.11
+      - test_consolidated_under_offer_next:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.1
+      - test_consolidated_relisted_next:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.1
+      - test_consolidated_exchange_next:
+          key_column: OUTRA_ID
+          max_failure_rate: 0.1
+      - test_count_events:
+          event: EXCHANGE
+          transaction_type: SALE
+      - test_count_events:
+          event: EXCHANGE
+          transaction_type: RENT
+      - test_count_events:
+          event: WITHDRAWN
+          transaction_type: SALE
+      - test_count_events:
+          event: WITHDRAWN
+          transaction_type: RENT
+      - test_count_events:
+          event: NEW_INSTRUCTION
+          transaction_type: SALE
+      - test_count_events:
+          event: NEW_INSTRUCTION
+          transaction_type: RENT
+      - test_count_events:
+          event: PRICE_CHANGE
+          transaction_type: SALE
+      - test_count_events:
+          event: PRICE_CHANGE
+          transaction_type: RENT
+      - test_count_events:
+          event: UNDER_OFFER
+          transaction_type: SALE
+      - test_count_events:
+          event: UNDER_OFFER
+          transaction_type: RENT
+      - test_count_events:
+          event: RELISTED
+          transaction_type: SALE
+      - test_count_events:
+          event: RELISTED
+          transaction_type: RENT
+      - test_count_events:
+          event: FALL_THROUGH
+          transaction_type: SALE
+      - test_count_events:
+          event: FALL_THROUGH
+          transaction_type: RENT
+    columns:
+      - name: OUTRA_ID
+        description: Outra identifier of a listing, being that the combination of a property and agent per lifecycle.
+      - name: UPRN
+        description: Unique Property Identifier.
+      - name: TRANSACTION_TYPE
+        description: Indicates whether the listing is for sale or rent.
+      - name: EVENT_DATE
+        description: Date when the event occurred.
+      - name: EVENT_TYPE
+        description: Type of event (e.g., price change, status update).
+      - name: EVENT_INFERRED
+        description: Weather the event was inferred or observed.
+      - name: PRICE
+        description: Price of the listing on the event date.
+      - name: AGENT_BRANCH
+        description: Agent responsible for the related listing.
+      - name: INSERT_DATE
+        description: Date when the event was recorded in the database.
+      - name: LOAD_DATE
+        description: Date when the listing which originates the event was loaded.
+      - name: LAST_MODIFIED_DATE
+        description: Date when the event was last modified.
