@@ -2,10 +2,28 @@ version: 2
 
 models:
   - name: segments
-    description: "Segments assigned to each UPRN"
+    description: >
+      Segments assigned to each UPRN, representing behavioural, financial, demographic, lifestyle, property,
+      and mobility characteristics inferred at the household level. Each column is a boolean flag indicating whether the 
+      household belongs to a given segment. These segments are derived from aggregated household attributes, property
+      features, on‑market activity, and external enrichment datasets. The table provides a unified segmentation layer that 
+      supports consumer analytics, targeted modelling, property intelligence, and household profiling across the business.
+
     config:
       contract:
         enforced: true
+      tags:
+        - core
+        - household
+      persist_docs:
+        relation: true
+        columns: true
+
+    meta:
+      owner: mcosta
+      domain: household
+      contains_pii: true
+
     columns:
       - name: uprn
         description: "Unique Property Reference Number"

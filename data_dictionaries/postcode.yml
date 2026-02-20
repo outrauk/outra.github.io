@@ -1,0 +1,119 @@
+version: 2
+
+models:
+  - name: postcode
+    description: >
+      Master reference table for all UK postcodes. Includes postcode hierarchy
+      (area, district, sector, unit), administrative geography (local authority,
+      region, nation, LSOA/MSOA), parliamentary constituency, and location
+      coordinates (centroid latitude/longitude and easting/northing).
+
+    # ---------------------------------------------------------
+    # Model configuration
+    # ---------------------------------------------------------
+    config:
+      tags: [core, geographic]
+      persist_docs:
+        relation: true
+        columns: true
+
+    meta:
+      owner: mcosta
+      domain: geographic
+      contains_pii: false
+      sources: ['ONS']
+
+    # ---------------------------------------------------------
+    # Columns
+    # ---------------------------------------------------------
+    columns:
+      - name: POSTCODE
+        description: Full UK postcode (e.g., CV3 2HU).
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: POSTCODE_AREA
+        description: First part of the postcode indicating the area (e.g., CV).
+        data_type: string
+
+      - name: POSTCODE_DISTRICT
+        description: Area plus district number (e.g., CV3).
+        data_type: string
+
+      - name: POSTCODE_SECTOR
+        description: District plus sector number (e.g., CV3 2).
+        data_type: string
+
+      - name: POSTCODE_UNIT
+        description: Delivery unit of the postcode (e.g., HU).
+        data_type: string
+
+      - name: POST_TOWN
+        description: Royal Mail post town for the postcode.
+        data_type: string
+
+      - name: LA_CODE
+        description: Local authority code (e.g., E08000026).
+        data_type: string
+
+      - name: LA_NAME
+        description: Local authority name (e.g., Coventry).
+        data_type: string
+
+      - name: REGION_CODE
+        description: ONS region code.
+        data_type: string
+
+      - name: REGION_NAME
+        description: ONS region name (e.g., West Midlands).
+        data_type: string
+
+      - name: LSOA_CODE
+        description: Lower Layer Super Output Area code.
+        data_type: string
+
+      - name: LSOA_NAME
+        description: Lower Layer Super Output Area name.
+        data_type: string
+
+      - name: MSOA_CODE
+        description: Middle Layer Super Output Area code.
+        data_type: string
+
+      - name: MSOA_NAME
+        description: Middle Layer Super Output Area name.
+        data_type: string
+
+      - name: NATION_CODE
+        description: Nation code (e.g., E11000005 for England).
+        data_type: string
+
+      - name: NATION_NAME
+        description: Nation name (e.g., England).
+        data_type: string
+
+      - name: CONSTITUENCY_CODE
+        description: Parliamentary constituency code.
+        data_type: string
+
+      - name: CONSTITUENCY_NAME
+        description: Parliamentary constituency name.
+        data_type: string
+
+      - name: CENTROID_LONGITUDE
+        description: Longitude of the geographic centroid of the postcode.
+        data_type: float
+
+      - name: CENTROID_LATITUDE
+        description: Latitude of the geographic centroid of the postcode.
+        data_type: float
+
+      - name: POSTCODE_EASTING
+        description: Ordnance Survey grid easting for the postcode centroid.
+        data_type: integer
+
+      - name: POSTCODE_NORTHING
+        description: Ordnance Survey grid northing for the postcode centroid.
+        data_type: integer

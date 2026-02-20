@@ -12,15 +12,627 @@ sources:
   schema: GEOGRAPHIC
   tables:
   - name: UPRN_ADDRESS_DETAILS
+    description: 'Master address reference table keyed by UPRN. Contains full address
+      components, postcode hierarchy, administrative geography (locality, post town,
+      district, county, region, country), property metadata, OSGB coordinates, lat/long,
+      and H3 indexes at multiple resolutions. Used for geocoding, spatial enrichment,
+      and address attribution in downstream products.
+
+      '
+    columns:
+    - name: UPRN
+      description: Unique Property Reference Number.
+      data_type: number
+      tests:
+      - not_null
+      - unique
+    - name: UDPRN
+      description: Unique Delivery Point Reference Number.
+      data_type: number
+    - name: PARENT_UPRN
+      description: Parent UPRN.
+      data_type: number
+    - name: ADDRESS_LINE_1
+      description: First line of address.
+      data_type: string
+    - name: ADDRESS_LINE_2
+      description: Second line of address.
+      data_type: string
+    - name: ADDRESS_LINE_3
+      description: Third line of address.
+      data_type: string
+    - name: ADDRESS_LINE_4
+      description: Fourth line of address.
+      data_type: string
+    - name: UNIT_NUMBER
+      description: Unit or apartment number.
+      data_type: string
+    - name: BUILDING_INFO
+      description: Building descriptive information.
+      data_type: string
+    - name: BUILDING_NUMBER
+      description: Building number.
+      data_type: string
+    - name: STREET
+      description: Street name.
+      data_type: string
+    - name: POSTCODE
+      description: Full UK postcode.
+      data_type: string
+      tests:
+      - not_null
+    - name: POSTCODE_AREA
+      description: Postcode area.
+      data_type: string
+    - name: POSTCODE_DISTRICT
+      description: Postcode district.
+      data_type: string
+    - name: POSTCODE_SECTOR
+      description: Postcode sector.
+      data_type: string
+    - name: LOCALITY
+      description: Locality inside post town.
+      data_type: string
+    - name: POST_TOWN
+      description: Post town.
+      data_type: string
+    - name: ADMINISTRATIVE_AREA
+      description: Admin area.
+      data_type: string
+    - name: DISTRICT
+      description: District.
+      data_type: string
+    - name: COUNTY
+      description: County.
+      data_type: string
+    - name: REGION
+      description: Region name.
+      data_type: string
+    - name: COUNTRY
+      description: Country name.
+      data_type: string
+    - name: LATITUDE
+      description: Latitude.
+      data_type: float
+    - name: LONGITUDE
+      description: Longitude.
+      data_type: float
+    - name: X_COORDINATE
+      description: OSGB X coordinate.
+      data_type: string
+    - name: Y_COORDINATE
+      description: OSGB Y coordinate.
+      data_type: string
   - name: POSTCODE
+    description: 'Master reference table for all UK postcodes. Includes postcode hierarchy
+      (area, district, sector, unit), administrative geography (local authority, region,
+      nation, LSOA/MSOA), parliamentary constituency, and location coordinates (centroid
+      latitude/longitude and easting/northing).
+
+      '
+    columns:
+    - name: POSTCODE
+      description: Full UK postcode (e.g., CV3 2HU).
+      data_type: string
+      tests:
+      - not_null
+      - unique
+    - name: POSTCODE_AREA
+      description: First part of the postcode indicating the area (e.g., CV).
+      data_type: string
+    - name: POSTCODE_DISTRICT
+      description: Area plus district number (e.g., CV3).
+      data_type: string
+    - name: POSTCODE_SECTOR
+      description: District plus sector number (e.g., CV3 2).
+      data_type: string
+    - name: POSTCODE_UNIT
+      description: Delivery unit of the postcode (e.g., HU).
+      data_type: string
+    - name: POST_TOWN
+      description: Royal Mail post town for the postcode.
+      data_type: string
+    - name: LA_CODE
+      description: Local authority code (e.g., E08000026).
+      data_type: string
+    - name: LA_NAME
+      description: Local authority name (e.g., Coventry).
+      data_type: string
+    - name: REGION_CODE
+      description: ONS region code.
+      data_type: string
+    - name: REGION_NAME
+      description: ONS region name (e.g., West Midlands).
+      data_type: string
+    - name: LSOA_CODE
+      description: Lower Layer Super Output Area code.
+      data_type: string
+    - name: LSOA_NAME
+      description: Lower Layer Super Output Area name.
+      data_type: string
+    - name: MSOA_CODE
+      description: Middle Layer Super Output Area code.
+      data_type: string
+    - name: MSOA_NAME
+      description: Middle Layer Super Output Area name.
+      data_type: string
+    - name: NATION_CODE
+      description: Nation code (e.g., E11000005 for England).
+      data_type: string
+    - name: NATION_NAME
+      description: Nation name (e.g., England).
+      data_type: string
+    - name: CONSTITUENCY_CODE
+      description: Parliamentary constituency code.
+      data_type: string
+    - name: CONSTITUENCY_NAME
+      description: Parliamentary constituency name.
+      data_type: string
+    - name: CENTROID_LONGITUDE
+      description: Longitude of the geographic centroid of the postcode.
+      data_type: float
+    - name: CENTROID_LATITUDE
+      description: Latitude of the geographic centroid of the postcode.
+      data_type: float
+    - name: POSTCODE_EASTING
+      description: Ordnance Survey grid easting for the postcode centroid.
+      data_type: integer
+    - name: POSTCODE_NORTHING
+      description: Ordnance Survey grid northing for the postcode centroid.
+      data_type: integer
 - name: CORE.HOUSEHOLD
   description: ''
   database: CORE
   schema: HOUSEHOLD
   tables:
   - name: DEMOGRAPHICS
+    description: Household-level demographic attributes derived from CACI and property
+      datasets, keyed by UPRN.
+    columns:
+    - name: UPRN
+      description: Unique Property Reference Number.
+      data_type: numeric
+      tests:
+      - not_null
+      - unique
+    - name: POSTCODE
+      description: Full postcode of the household.
+      data_type: varchar
+      tests:
+      - not_null
+    - name: AGE_BAND
+      description: Five-year age band of the oldest household member.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - 85+
+          - 80-84
+          - 75-79
+          - 70-74
+          - 65-69
+          - 60-64
+          - 55-59
+          - 50-54
+          - 45-49
+          - 40-44
+          - 35-39
+          - 30-34
+          - 25-29
+          - 18-24
+    - name: HOUSEHOLD_SIZE
+      description: Household size grouped into numeric buckets.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - 5+
+          - 3-4
+          - '2'
+          - '1'
+    - name: HOUSEHOLD_RELATIONSHIP
+      description: Household composition type.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - single_(including_previously_married)
+          - couple
+    - name: SOCIAL_GRADE
+      description: NRS social grade.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - A
+          - B
+          - C1
+          - C2
+          - D
+          - E
+    - name: IS_EMPLOYED
+      description: Whether household members are employed.
+      data_type: boolean
+    - name: IS_SELF_EMPLOYED
+      description: Whether household members are self-employed.
+      data_type: boolean
+    - name: HAS_PENSION_SCHEME_ORGANISED
+      description: Type of pension scheme organisation.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - personally
+          - through_company
+    - name: OCCUPATION
+      description: Primary occupation classification.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - unemployed
+          - student
+          - skilled/manual_worker
+          - service_sector
+          - retired
+          - professional
+          - office_worker
+          - looking_after_home
+          - director/managerial
+    - name: HIGHEST_QUALIFICATION
+      description: Highest educational qualification achieved.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - university_degree_or_higher
+          - a-level_or_equivalent
+          - gcse_or_equivalent
+          - unfinished_secondary_education_or_lower
+    - name: CHILDREN_AT_HOME
+      description: Number of children living at home.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - 3+
+          - '2'
+          - '1'
+          - '0'
+    - name: CHILDREN_AGE_BAND
+      description: Age band of children living at home.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - 16+
+          - 11+
+          - 5+
+          - 0+
+    - name: HOUSEHOLD_INCOME_BAND
+      description: Household income band.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>100k'
+          - 75k-100k
+          - 50k-75k
+          - 40k-50k
+          - 30k-40k
+          - 20k-30k
+          - 10k-20k
+          - 0-10k
+    - name: RETIREMENT_INCOME
+      description: Primary retirement income type.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - other
+          - savings/investments/property
+          - company_pension_final_salary_scheme
+          - state_pension
+    - name: HAS_SAVINGS_ACCOUNT
+      description: Whether household has a savings account.
+      data_type: boolean
+    - name: SAVINGS_BAND
+      description: Estimated savings band.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>100k'
+          - '>25k'
+          - 10k-25k
+          - 2.5k-10k
+          - 500-2.5k
+          - 1-500
+    - name: INVESTMENTS_VALUE_BAND
+      description: Band of total investment value.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>100k'
+          - '>25k'
+          - 10k-25k
+          - 2.5k-10k
+          - 500-2.5k
+          - 1-500
+    - name: HOME_OWNED
+      description: Home ownership type.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - with_mortgage_full_ownership
+          - with_mortgage_shared_ownership
+          - with_mortgage
+          - outright
+    - name: MONTHLY_MORTGAGE_REPAYMENT
+      description: Monthly mortgage repayment band.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>1000'
+          - 750-1000
+          - 500-750
+          - 250-500
+          - 1-250
+    - name: HOUSING_ASSOCIATION_RENTED
+      description: Whether the property is housing-association rented.
+      data_type: boolean
+    - name: LOCAL_AUTHORITY_RENTED
+      description: Whether the property is local-authority rented.
+      data_type: boolean
+    - name: OUTSTANDING_MORTGAGE
+      description: Outstanding mortgage value band.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>200k'
+          - 150k-200k
+          - 100k-150k
+          - 50k-100k
+          - <50k
+    - name: MORTGAGE_RATE
+      description: Mortgage rate type.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - fixed
+          - other_variable_rate
+          - standard_variable_rate
+          - variable
+    - name: CREDIT_CARD_SPENDING
+      description: Credit card spending in last month.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>1000'
+          - 750-1000
+          - 500-750
+          - 250-500
+          - 100-250
+          - 50-100
+          - 0-50
+    - name: MANAGES_CURRENT_ACCOUNT
+      description: How the household manages their current account.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - via_atm
+          - in_branch
+          - online_at_home_or_work_not_mobile
+          - mobile_device
+          - online
+          - by_phone
+          - by_post
+    - name: MAIN_CAR_CLASS
+      description: Main vehicle class used by the household.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - other
+          - luxury
+          - saloon
+          - estate
+          - hatchback
+    - name: NORMAL_COMMUTE
+      description: Primary commuting method.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - other_(walk_cycle_other)
+          - private_transport
+          - public_transport
+    - name: WEEKLY_SUPERMARKET_SPEND
+      description: Weekly supermarket expenditure band.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>100'
+          - 80-100
+          - 50-80
+          - 30-50
+          - 0-30
+    - name: ONLY_SAVE_FOR_A_SPECIFIC_PURPOSE
+      description: Whether the household only saves for specific purposes.
+      data_type: boolean
+    - name: HAS_INVESTMENTS
+      description: Whether household has investments.
+      data_type: boolean
+    - name: HAS_STOCKS_AND_SHARES
+      description: Whether household holds stocks and shares.
+      data_type: boolean
+    - name: HAS_STOCKS_AND_SHARES_ISA
+      description: Whether household holds a stocks & shares ISA.
+      data_type: boolean
+    - name: FINANCIAL_SITUATION
+      description: Financial situation classification.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - drawing_on_savings_or_running_into_debt
+          - just_managing_to_make_ends_meet
+          - saving_a_lot
+          - saving_a_little
+    - name: HAS_UNIT_TRUSTS
+      description: Whether household holds unit trusts.
+      data_type: boolean
+    - name: HAS_LOAN
+      description: Whether household holds a loan.
+      data_type: boolean
+    - name: HAS_2_LOANS
+      description: Whether household holds two loans.
+      data_type: boolean
+    - name: HAS_UNSECURED_LOAN
+      description: Whether household holds an unsecured loan.
+      data_type: boolean
+    - name: UNSECURED_DEBT_GREATER_THAN_15K
+      description: "Whether unsecured debt exceeds \xA315k."
+      data_type: boolean
+    - name: HAS_MORTGAGE_ON_MORE_THAN_ONE_PROPERTY
+      description: Whether household has mortgages on multiple properties.
+      data_type: boolean
+    - name: OWNS_A_HOLIDAY_HOME
+      description: Whether household owns a holiday home.
+      data_type: boolean
+    - name: HOLDS_A_BUY_TO_LET_PROPERTY_OR_PROPERTY_DEVELOPMENT_PROJECTS
+      description: Whether household holds buy-to-let or development property.
+      data_type: boolean
+    - name: NUMBER_OF_CARS
+      description: Number of cars owned.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '3'
+          - '2'
+          - '1'
+          - '0'
+    - name: MAIN_CAR_LESS_THAN_3_YEARS_OLD
+      description: Whether the main car is < 3 years old.
+      data_type: boolean
+    - name: MAIN_CAR_USES_ALTERNATIVE_FUEL
+      description: Whether the main vehicle uses alternative fuel.
+      data_type: boolean
+    - name: HAS_BREAKDOWN_COVER
+      description: Whether household has breakdown cover.
+      data_type: boolean
+    - name: CAR_SHARES_JOURNEY_TO_WORK
+      description: Whether household participates in car sharing for work.
+      data_type: boolean
+    - name: MAIN_SUPERMARKET_FOR_FOOD_M_AND_S
+      description: Boolean flag indicating that the main supermarket for food is Marks
+        & Spencer.
+      data_type: boolean
+    - name: SHOP_AT_ALDI
+      description: 'Boolean flag: household shops at ALDI.'
+      data_type: boolean
+    - name: SHOP_AT_ASDA
+      description: 'Boolean flag: household shops at ASDA.'
+      data_type: boolean
+    - name: SHOP_AT_CO_OP
+      description: "Boolean flag: household shops at Co\u2011op."
+      data_type: boolean
+    - name: SHOP_AT_LIDL
+      description: 'Boolean flag: household shops at Lidl.'
+      data_type: boolean
+    - name: SHOP_AT_MORRISONS
+      description: 'Boolean flag: household shops at Morrisons.'
+      data_type: boolean
+    - name: SHOP_AT_SAINSBURY
+      description: "Boolean flag: household shops at Sainsbury\u2019s."
+      data_type: boolean
+    - name: SHOP_AT_TESCO
+      description: 'Boolean flag: household shops at Tesco.'
+      data_type: boolean
+    - name: SHOP_AT_WAITROSE
+      description: 'Boolean flag: household shops at Waitrose.'
+      data_type: boolean
+    - name: SHOP_AT
+      description: Supermarkets the household shops at (combined multiselect).
+      data_type: varchar
+    - name: HAS_A_PET
+      description: Whether the household has a pet.
+      data_type: boolean
+    - name: HAS_PET_INSURANCE
+      description: Whether the household has pet insurance.
+      data_type: boolean
+    - name: YEARLY_MILEAGE_BAND
+      description: Yearly household mileage band.
+      data_type: varchar
+      tests:
+      - accepted_values:
+          values:
+          - '>9000'
+          - 4000-9000
+          - <4000
+    - name: HAS_TRAVEL_INSURANCE
+      description: Whether the household has travel insurance.
+      data_type: boolean
+    - name: INTERNET_FREQUENT_USER
+      description: Whether the household frequently uses the internet.
+      data_type: boolean
+    - name: REGULARLY_VISITED_WEBSITES_AIRBNB
+      description: Whether the household regularly uses Airbnb.
+      data_type: boolean
+    - name: REGULARLY_VISITED_WEBSITES_RIGHTMOVE
+      description: Whether the household regularly visits Rightmove.
+      data_type: boolean
+    - name: HAS_PRIVATE_MEDICAL_INSURANCE
+      description: Whether the household has private medical insurance.
+      data_type: boolean
+    - name: LIFESTYLE_NO_TIME_FOR_COOKING
+      description: 'Lifestyle indicator: limited time for cooking.'
+      data_type: boolean
+    - name: LIFESTYLE_REGULAR_EXERCISE
+      description: 'Lifestyle indicator: takes regular exercise.'
+      data_type: boolean
+    - name: LIFESTYLE_WAIST_CONSCIOUS
+      description: 'Lifestyle indicator: tries to reduce waste and reuse items.'
+      data_type: boolean
+    - name: LIFESTYLE_HEALTHY_FOOD
+      description: 'Lifestyle indicator: prioritises healthy eating.'
+      data_type: boolean
+    - name: EATING_HABITS_ORGANIC_FOOD
+      description: Whether the household prefers organic/natural foods.
+      data_type: boolean
+    - name: EATING_HABITS_VEGAN
+      description: Whether the household follows a vegan diet.
+      data_type: boolean
+    - name: INTERESTS_SPORTS
+      description: Interest in sports activities.
+      data_type: boolean
+    - name: INTERESTS_HIKING
+      description: Interest in hiking, climbing or outdoor pursuits.
+      data_type: boolean
+    - name: INTERESTS_MEDITATION_MINDFULNESS
+      description: Interest in meditation/mindfulness.
+      data_type: boolean
+    - name: LAST_UPDATE_DATE
+      description: Record last update date.
+      data_type: date
   - name: SEGMENTS
-    description: Segments assigned to each UPRN
+    description: "Segments assigned to each UPRN, representing behavioural, financial,\
+      \ demographic, lifestyle, property, and mobility characteristics inferred at\
+      \ the household level. Each column is a boolean flag indicating whether the\
+      \  household belongs to a given segment. These segments are derived from aggregated\
+      \ household attributes, property features, on\u2011market activity, and external\
+      \ enrichment datasets. The table provides a unified segmentation layer that\
+      \  supports consumer analytics, targeted modelling, property intelligence, and\
+      \ household profiling across the business.\n"
     columns:
     - name: uprn
       description: Unique Property Reference Number

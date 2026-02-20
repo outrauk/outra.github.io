@@ -1,0 +1,131 @@
+
+version: 2
+
+models:
+  - name: uprn_address_details
+    description: >
+      Master address reference table keyed by UPRN. Contains full
+      address components, postcode hierarchy, administrative geography
+      (locality, post town, district, county, region, country), property
+      metadata, OSGB coordinates, lat/long, and H3 indexes at multiple
+      resolutions. Used for geocoding, spatial enrichment, and address
+      attribution in downstream products.
+
+    config:
+      tags: [core, geographic]
+      persist_docs:
+        relation: true
+        columns: true
+
+    meta:
+      owner: mcosta
+      domain: geographic
+      contains_pii: false
+      source: ['EXPERIAN', 'ONS', 'ADDRESSBASE']
+
+    columns:
+      - name: UPRN
+        description: Unique Property Reference Number.
+        data_type: number
+        tests: [not_null, unique]
+
+      - name: UDPRN
+        description: Unique Delivery Point Reference Number.
+        data_type: number
+
+      - name: PARENT_UPRN
+        description: Parent UPRN.
+        data_type: number
+
+      - name: ADDRESS_LINE_1
+        description: First line of address.
+        data_type: string
+
+      - name: ADDRESS_LINE_2
+        description: Second line of address.
+        data_type: string
+
+      - name: ADDRESS_LINE_3
+        description: Third line of address.
+        data_type: string
+
+      - name: ADDRESS_LINE_4
+        description: Fourth line of address.
+        data_type: string
+
+      - name: UNIT_NUMBER
+        description: Unit or apartment number.
+        data_type: string
+
+      - name: BUILDING_INFO
+        description: Building descriptive information.
+        data_type: string
+
+      - name: BUILDING_NUMBER
+        description: Building number.
+        data_type: string
+
+      - name: STREET
+        description: Street name.
+        data_type: string
+
+      - name: POSTCODE
+        description: Full UK postcode.
+        data_type: string
+        tests: [not_null]
+
+      - name: POSTCODE_AREA
+        description: Postcode area.
+        data_type: string
+
+      - name: POSTCODE_DISTRICT
+        description: Postcode district.
+        data_type: string
+
+      - name: POSTCODE_SECTOR
+        description: Postcode sector.
+        data_type: string
+
+      - name: LOCALITY
+        description: Locality inside post town.
+        data_type: string
+
+      - name: POST_TOWN
+        description: Post town.
+        data_type: string
+
+      - name: ADMINISTRATIVE_AREA
+        description: Admin area.
+        data_type: string
+
+      - name: DISTRICT
+        description: District.
+        data_type: string
+
+      - name: COUNTY
+        description: County.
+        data_type: string
+
+      - name: REGION
+        description: Region name.
+        data_type: string
+
+      - name: COUNTRY
+        description: Country name.
+        data_type: string
+
+      - name: LATITUDE
+        description: Latitude.
+        data_type: float
+
+      - name: LONGITUDE
+        description: Longitude.
+        data_type: float
+
+      - name: X_COORDINATE
+        description: OSGB X coordinate.
+        data_type: string
+
+      - name: Y_COORDINATE
+        description: OSGB Y coordinate.
+        data_type: string
