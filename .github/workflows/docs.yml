@@ -33,24 +33,24 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Deploy dbt docs
-        run: |
-          mkdir docs
-          cp dbt/target/manifest.json docs/manifest.json
-          cp dbt/target/catalog.json docs/catalog.json
-          cp dbt/target/index.html docs/index.html
-          ghp-import -n -p -f docs/
-        env:
-          DBT_SNOWFLAKE_USER: DBT
-          DBT_SNOWFLAKE_ROLE: DBT
-          DBT_SNOWFLAKE_PASSWORD: ${{ secrets.DBT_SNOWFLAKE_PASSWORD }}
-          DBT_PROJECT_DIR: ./dbt
-          DBT_PROFILES_DIR: ./dbt
+#      - name: Deploy dbt docs
+#        run: |
+#          mkdir docs
+#          cp dbt/target/manifest.json docs/manifest.json
+#          cp dbt/target/catalog.json docs/catalog.json
+#          cp dbt/target/index.html docs/index.html
+#          ghp-import -n -p -f docs/
+#        env:
+#          DBT_SNOWFLAKE_USER: DBT
+#          DBT_SNOWFLAKE_ROLE: DBT
+#          DBT_SNOWFLAKE_PASSWORD: ${{ secrets.DBT_SNOWFLAKE_PASSWORD }}
+#          DBT_PROJECT_DIR: ./dbt
+#          DBT_PROFILES_DIR: ./dbt
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'docs/'
+          path: 'dbt/target/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
