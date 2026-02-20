@@ -4,7 +4,7 @@
 
 Welcome to the CORE Data Products portal! 
 
-**Access the live portal here:** https://outrauk.github.io/
+**Access the live portal here:** https://outrauk.github.io/core_datasets_docs/
 
 This portal provides comprehensive access to all CORE data products organized by category:
 - **Property** - Unified property data
