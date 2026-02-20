@@ -2,8 +2,15 @@ models:
 
   - name: on_market_events_consolidated
     description: >
-      Tracks changes and events related to property listings over time,
-      such as price changes or status updates.
+      Consolidates the complete chronology of events and status changes across property listings for both sales and 
+      rentals. This dataset captures every significant milestone in a listing's lifecycle— from new instructions and 
+      price changes to under offer, withdrawn, relisted, exchange, and fall-through events.
+
+      Each record represents a distinct event that can be directly observed or inferred and is tied to a property-agent
+      relationship - OUTRA_ID. Each OUTRA_ID represents the full journey of one property through their lifecycle.
+
+      By combining data from differents sources - Zoopla & Rightmove - this consolidated view, provides comprehensive
+      visibility into listing activity, enabling analysis of transaction patterns, event frequency.
     tests:
       - test_consolidated_new_instruction:
           key_column: OUTRA_ID
